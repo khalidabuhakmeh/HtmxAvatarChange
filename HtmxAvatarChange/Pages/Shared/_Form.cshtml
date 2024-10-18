@@ -1,0 +1,45 @@
+@model IndexModel
+
+<fieldset id="account-settings">
+    <legend>Account Settings</legend>
+
+    @if (Model.HasMessage)
+    {
+        <div class="alert @(Model.MessageCssClass ?? "alert-info")" role="alert">
+            @Model.Message
+        </div>
+    }
+
+    <form method="post" hx-post hx-target="#account-settings" hx-swap="outerHTML">
+        <div class="form-group row">
+            <label asp-for="Name" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" asp-for="Name">
+            </div>
+        </div>
+        <fieldset class="form-group mt-3">
+            <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">Avatar</legend>
+                <div class="col-sm-10">
+                    @foreach (var avatar in Model.Avatars)
+                    {
+                        <div class="form-check">
+                            <input
+                                id="@avatar.Text"
+                                asp-for="AvatarUrl"
+                                class="form-check-inline" type="radio"
+                                value="@avatar.Value"
+                                checked="@Model.IsCurrentAvatar(avatar.Value)">
+                            <label class="form-check-label" for="@avatar.Text">
+                                <img src="@Url.Content(avatar.Value)" class="profile-pic" alt="@avatar.Text"/>
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group row mt-3">
+            <button type="submit" class="btn btn-primary">Save Profile</button>
+        </div>
+    </form>
+</fieldset>

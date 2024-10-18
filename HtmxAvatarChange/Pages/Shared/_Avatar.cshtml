@@ -1,0 +1,12 @@
+@model HtmxAvatarChange.Models.UserService
+
+<div id="profile-avatar"
+     class="mx-2 smooth"
+     hx-get="@Url.Page("Index", "Avatar")"
+     hx-trigger="avatar from:body">
+    <div class="profile-pic">
+        <img src="@Url.Content(Model.AvatarUrl)" alt="Profile Picture">
+    </div>
+    <span class="navbar-text"> @Model.Name</span>
+</div>
+
